@@ -42,22 +42,22 @@ export default function RefundPolicy() {
           <h1 className="text-4xl font-bold text-gray-900 mb-8">Refund Policy</h1>
           
           <p className="text-gray-600 mb-8">
-            <strong>Effective Date:</strong> September 7, 2025<br/>
-            <strong>Last Updated:</strong> September 7, 2025
+            <strong>Effective Date:</strong> November 4, 2025<br/>
+            <strong>Last Updated:</strong> November 4, 2025
           </p>
 
           {/* Important Notice Banner */}
-          <div className="bg-red-50 border-l-4 border-red-400 p-6 mb-8">
+          <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
             <div className="flex">
               <div className="flex-shrink-0">
-                <svg className="h-6 w-6 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                <svg className="h-6 w-6 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                 </svg>
               </div>
               <div className="ml-3">
-                <h2 className="text-lg font-medium text-red-800">IMPORTANT: NO REFUNDS POLICY</h2>
-                <div className="mt-2 text-sm text-red-700">
-                  <p><strong>ALL SALES ARE FINAL AND NON-REFUNDABLE.</strong> HistoriVIN is a digital service that provides immediate delivery of vehicle history reports. Please read this policy carefully before making a purchase.</p>
+                <h2 className="text-lg font-medium text-blue-800">14-Day Refund Policy</h2>
+                <div className="mt-2 text-sm text-blue-700">
+                  <p><strong>CarCheck offers refunds within 14 days of purchase under specific conditions.</strong> As a digital service provider, we understand that certain circumstances may warrant a refund despite immediate report delivery.</p>
                 </div>
               </div>
             </div>
@@ -65,33 +65,95 @@ export default function RefundPolicy() {
 
           <div className="space-y-8">
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. No Refund Policy Overview</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Refund Policy Overview</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                CarCheck operates a strict no-refund policy for all purchases. Once payment is processed and a vehicle history report is generated, <strong>no refunds will be issued under any circumstances</strong>.
+                CarCheck provides refunds within <strong>14 days of purchase</strong> under specific circumstances outlined below. While our service provides immediate digital delivery of comprehensive vehicle history information, we recognize that certain situations may warrant a refund.
               </p>
               <p className="text-gray-700 leading-relaxed">
-                This policy exists because our service provides immediate digital delivery of comprehensive vehicle history information that cannot be &ldquo;returned&rdquo; once delivered.
+                This policy balances the nature of our digital service delivery with fair customer protection and reasonable business practices.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Reasons for No-Refund Policy</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. 14-Day Refund Window</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Our no-refund policy is in place for the following reasons:
+                Customers have exactly <strong>14 calendar days from the date of purchase</strong> to request a refund under the qualifying conditions listed in this policy.
               </p>
               <ul className="list-disc pl-6 text-gray-700 space-y-2">
-                <li><strong>Digital Service:</strong> Vehicle history reports are digital products delivered immediately</li>
-                <li><strong>Information Value:</strong> Once you receive the vehicle history information, it cannot be &ldquo;un-delivered&rdquo;</li>
-                <li><strong>Database Costs:</strong> We incur costs accessing premium automotive databases for each report</li>
-                <li><strong>Instant Delivery:</strong> Reports are typically delivered within 12 hours</li>
-                <li><strong>Industry Standard:</strong> No-refund policies are standard practice in the vehicle history report industry</li>
+                <li><strong>Refund Period:</strong> 14 calendar days from purchase date</li>
+                <li><strong>Request Method:</strong> Email support@historivin.store with your request</li>
+                <li><strong>Processing Time:</strong> Approved refunds processed within 5-7 business days</li>
+                <li><strong>Refund Method:</strong> Original payment method used for purchase</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. What Our Service Includes</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Qualifying Conditions for Refunds</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                When you purchase a HistoriVIN report for $39.99, you receive:
+                Refunds within the 14-day window may be approved for the following situations:
+              </p>
+              
+              <div className="space-y-4">
+                <div className="bg-green-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">✓ Technical Service Failure</h4>
+                  <p className="text-gray-700 text-sm">If our system fails to generate or deliver a report due to technical issues on our end.</p>
+                </div>
+                
+                <div className="bg-green-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">✓ Incorrect VIN Processing</h4>
+                  <p className="text-gray-700 text-sm">If we process an incorrect VIN due to a system error (not customer input error).</p>
+                </div>
+                
+                <div className="bg-green-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">✓ Duplicate Charges</h4>
+                  <p className="text-gray-700 text-sm">If you were charged multiple times for the same report due to payment processing errors.</p>
+                </div>
+                
+                <div className="bg-green-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">✓ Service Unavailable for VIN</h4>
+                  <p className="text-gray-700 text-sm">If we cannot provide any meaningful data for a valid VIN due to database limitations.</p>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Non-Qualifying Scenarios</h2>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                The following scenarios do <strong>NOT</strong> qualify for refunds, even within the 14-day window:
+              </p>
+              
+              <div className="space-y-4">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">Customer Input Errors</h4>
+                  <p className="text-gray-700 text-sm">If you enter the wrong VIN number, we will still generate a report for the VIN provided.</p>
+                </div>
+                
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">Limited Historical Data</h4>
+                  <p className="text-gray-700 text-sm">Some vehicles may have limited historical data. We deliver all available information regardless of quantity.</p>
+                </div>
+                
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">Clean History Reports</h4>
+                  <p className="text-gray-700 text-sm">A &ldquo;clean&rdquo; report showing no accidents or issues is still valuable and complete information.</p>
+                </div>
+                
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">Change of Mind</h4>
+                  <p className="text-gray-700 text-sm">Changing your mind about purchasing the vehicle after receiving the report does not qualify for a refund.</p>
+                </div>
+
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-2">Dissatisfaction with Content</h4>
+                  <p className="text-gray-700 text-sm">Dissatisfaction with the information content when the report contains all available data from our sources.</p>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. What Our Service Includes</h2>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                When you purchase a CarCheck vehicle history report for $39.99, you receive:
               </p>
               <ul className="list-disc pl-6 text-gray-700 space-y-2">
                 <li>Comprehensive vehicle history report based on the VIN provided</li>
@@ -106,48 +168,23 @@ export default function RefundPolicy() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Common Scenarios (No Refunds Apply)</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. How to Request a Refund</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                The following scenarios do <strong>NOT</strong> qualify for refunds:
+                If you believe your situation qualifies for a refund under our policy:
               </p>
-              
-              <div className="space-y-4">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-2">Incorrect VIN Entry</h4>
-                  <p className="text-gray-700 text-sm">If you enter the wrong VIN number, we will still generate a report for the VIN provided. No refund will be issued.</p>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-2">Limited Data Available</h4>
-                  <p className="text-gray-700 text-sm">Some vehicles may have limited historical data. We deliver all available information, but cannot refund if the report contains less data than expected.</p>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-2">Clean History Reports</h4>
-                  <p className="text-gray-700 text-sm">A &ldquo;clean&rdquo; report showing no accidents or issues is still a valuable report. No refunds for vehicles with clean histories.</p>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-2">Changed Mind</h4>
-                  <p className="text-gray-700 text-sm">If you change your mind about purchasing the vehicle after receiving the report, no refund will be issued.</p>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-2">Duplicate Purchases</h4>
-                  <p className="text-gray-700 text-sm">Accidentally purchasing multiple reports for the same VIN does not qualify for a refund.</p>
-                </div>
-
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-2">Dissatisfaction with Content</h4>
-                  <p className="text-gray-700 text-sm">If you&apos;re unsatisfied with the information in the report, no refund will be provided as the report contains all available data from our sources.</p>
-                </div>
-              </div>
+              <ul className="list-disc pl-6 text-gray-700 space-y-2">
+                <li><strong>Contact us within 14 days:</strong> Email support@historivin.store</li>
+                <li><strong>Include your order details:</strong> Purchase date, VIN number, and payment information</li>
+                <li><strong>Explain the qualifying reason:</strong> Clearly describe why you believe a refund is warranted</li>
+                <li><strong>Provide evidence if applicable:</strong> Screenshots of errors or technical issues</li>
+                <li><strong>Response time:</strong> We will review and respond within 24-48 hours</li>
+              </ul>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Before You Purchase</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Before You Purchase</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                To avoid disappointment, please ensure you:
+                To minimize the need for refunds, please ensure you:
               </p>
               <ul className="list-disc pl-6 text-gray-700 space-y-2">
                 <li><strong>Double-check the VIN:</strong> Ensure the 17-character VIN is entered correctly</li>
@@ -159,11 +196,12 @@ export default function RefundPolicy() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Customer Support</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Customer Support</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                While we cannot offer refunds, our customer support team is available to help with:
+                Our customer support team is available to help with:
               </p>
               <ul className="list-disc pl-6 text-gray-700 space-y-2">
+                <li>Refund requests and eligibility determination</li>
                 <li>Technical issues with report delivery</li>
                 <li>Questions about report content and interpretation</li>
                 <li>Assistance with VIN lookup (if you&apos;re having trouble finding it)</li>
@@ -173,9 +211,9 @@ export default function RefundPolicy() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Report Delivery Issues</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Processing and Delivery Issues</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                If you experience delivery issues:
+                If you experience delivery issues before requesting a refund:
               </p>
               <ul className="list-disc pl-6 text-gray-700 space-y-2">
                 <li>Check your spam/junk email folder</li>
@@ -184,48 +222,35 @@ export default function RefundPolicy() {
                 <li>Contact our support team if you haven&apos;t received your report within 24 hours</li>
               </ul>
               <p className="text-gray-700 leading-relaxed mt-4">
-                We will work to resolve delivery issues, but this does not constitute grounds for a refund if the report is successfully generated.
+                We will work to resolve delivery issues. If we cannot resolve the technical problem, this may qualify for a refund under our technical service failure provision.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Legal and Regulatory Compliance</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Legal and Regulatory Compliance</h2>
               <p className="text-gray-700 leading-relaxed">
-                Our no-refund policy complies with applicable laws and regulations governing digital services. By using our service, you acknowledge and agree to this policy. This policy is part of our Terms of Service and is legally binding.
+                Our refund policy complies with applicable consumer protection laws and regulations governing digital services. This policy provides a fair balance between customer rights and business requirements for digital service delivery.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Chargeback and Dispute Policy</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">11. Dispute Resolution</h2>
               <p className="text-gray-700 leading-relaxed">
-                Initiating a chargeback or payment dispute after receiving a vehicle history report constitutes fraud. We will contest all illegitimate chargebacks and may pursue action for fraudulent disputes. The report delivery serves as proof of service completion.
+                If you disagree with a refund decision, you may escalate your concern by providing additional documentation. We are committed to fair resolution of all customer concerns within the bounds of this policy.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Policy Updates</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">12. Policy Updates</h2>
               <p className="text-gray-700 leading-relaxed">
                 We reserve the right to update this refund policy at any time. Changes will be effective immediately upon posting to our website. Your continued use of our service after policy changes constitutes acceptance of the updated policy.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">11. Alternative Services</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">13. Contact Information</h2>
               <p className="text-gray-700 leading-relaxed">
-                If you&apos;re unsure about purchasing a vehicle history report, consider these alternatives:
-              </p>
-              <ul className="list-disc pl-6 text-gray-700 space-y-2 mt-4">
-                <li>Research the vehicle&apos;s history through public records</li>
-                <li>Have the vehicle inspected by a qualified mechanic</li>
-                <li>Ask the seller for maintenance records and documentation</li>
-                <li>Consider the vehicle&apos;s age, mileage, and condition</li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">12. Contact Information</h2>
-              <p className="text-gray-700 leading-relaxed">
-                If you have questions about this refund policy or need customer support:
+                For refund requests or questions about this policy:
               </p>
               <div className="bg-gray-50 p-6 rounded-lg mt-4">
                 <p className="text-gray-700">
@@ -237,10 +262,10 @@ export default function RefundPolicy() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">13. Acknowledgment</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">14. Acknowledgment</h2>
               <div className="bg-blue-50 border-l-4 border-blue-400 p-6">
                 <p className="text-blue-800 font-medium">
-                  By purchasing a HistoriVIN vehicle history report, you acknowledge that you have read, understood, and agree to this no-refund policy. You understand that all sales are final and that no refunds will be issued under any circumstances.
+                  By purchasing a CarCheck vehicle history report, you acknowledge that you have read, understood, and agree to this refund policy. You understand that refunds are available within 14 days under the specific qualifying conditions outlined above.
                 </p>
               </div>
             </section>

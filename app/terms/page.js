@@ -42,8 +42,8 @@ export default function TermsOfService() {
           <h1 className="text-4xl font-bold text-gray-900 mb-8">Terms of Service</h1>
           
           <p className="text-gray-600 mb-8">
-            <strong>Effective Date:</strong> September 7, 2025<br/>
-            <strong>Last Updated:</strong> September 7, 2025
+            <strong>Effective Date:</strong> November 4, 2025<br/>
+            <strong>Last Updated:</strong> November 4, 2025
           </p>
 
           <div className="space-y-8">
@@ -57,7 +57,7 @@ export default function TermsOfService() {
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Description of Service</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                HistoriVIN provides vehicle history reports based on Vehicle Identification Numbers (VINs). Our service includes:
+                CarCheck provides vehicle history reports based on Vehicle Identification Numbers (VINs). Our service includes:
               </p>
               <ul className="list-disc pl-6 text-gray-700 space-y-2">
                 <li>Vehicle history reports containing accident history, title information, and other vehicle data</li>
@@ -93,34 +93,51 @@ export default function TermsOfService() {
                 <li>Current price: $39.99 USD per vehicle history report</li>
                 <li>All payments are processed securely through Paddle</li>
                 <li>Prices may change without notice</li>
-                <li>All sales are final and non-refundable</li>
+                <li>Refunds are available within 14 days under specific conditions outlined in our Refund Policy</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. No Refund Policy</h2>
-              <div className="bg-red-50 border-l-4 border-red-400 p-6 mb-6">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Refund Policy</h2>
+              <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-6">
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div className="ml-3">
-                    <h3 className="text-sm font-medium text-red-800">Important Notice</h3>
-                    <div className="mt-2 text-sm text-red-700">
-                      <p><strong>ALL SALES ARE FINAL.</strong> HistoriVIN is a digital service providing vehicle history reports. Once a report is generated and delivered, no refunds will be issued under any circumstances.</p>
+                    <h3 className="text-sm font-medium text-blue-800">Refund Policy</h3>
+                    <div className="mt-2 text-sm text-blue-700">
+                      <p><strong>14-Day Refund Window:</strong> CarCheck offers refunds within 14 days of purchase under specific conditions. Digital service delivery does not automatically disqualify refund eligibility. Please see our detailed Refund Policy for complete terms.</p>
                     </div>
                   </div>
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed">
-                This no-refund policy applies to all purchases because our service provides immediate digital delivery of vehicle history information. Please ensure you enter the correct VIN number before completing your purchase.
+                While this is a digital service providing immediate delivery of vehicle history information, we understand that certain circumstances may warrant a refund. Please review our Refund Policy for detailed information about eligible refund scenarios and the process.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Report Delivery</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Service Delivery and Human Involvement</h2>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                CarCheck&apos;s vehicle history reports are generated through a combination of automated systems and human oversight:
+              </p>
+              <ul className="list-disc pl-6 text-gray-700 space-y-2">
+                <li><strong>Automated Data Processing:</strong> Initial VIN analysis and data compilation is performed by automated systems</li>
+                <li><strong>Human Quality Assurance:</strong> Reports undergo human review for quality control and accuracy verification</li>
+                <li><strong>Expert Analysis:</strong> Complex cases may receive additional human analysis for market value assessment and damage evaluation</li>
+                <li><strong>Customer Support:</strong> Human customer service representatives are available to assist with report interpretation and technical issues</li>
+                <li><strong>Data Verification:</strong> Human analysts verify critical information and flag potential discrepancies</li>
+              </ul>
+              <p className="text-gray-700 leading-relaxed mt-4">
+                While our primary data processing is automated for efficiency, human expertise ensures report accuracy and provides personalized customer support when needed.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Report Delivery</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
                 Report delivery terms:
               </p>
@@ -134,7 +151,7 @@ export default function TermsOfService() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Data Accuracy and Limitations</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Data Accuracy and Limitations</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
                 While we strive for accuracy, please note:
               </p>
@@ -149,77 +166,77 @@ export default function TermsOfService() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Intellectual Property</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Intellectual Property</h2>
               <p className="text-gray-700 leading-relaxed">
                 All content, features, and functionality on our website and in our reports are owned by CarCheck and are protected by international copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written permission.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Disclaimer of Warranties</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Disclaimer of Warranties</h2>
               <p className="text-gray-700 leading-relaxed">
                 Our service is provided &ldquo;as is&rdquo; and &ldquo;as available&rdquo; without any warranties of any kind, either express or implied. We disclaim all warranties, including but not limited to warranties of merchantability, fitness for a particular purpose, and non-infringement. We do not warrant that the service will be uninterrupted or error-free.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Limitation of Liability</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">11. Limitation of Liability</h2>
               <p className="text-gray-700 leading-relaxed">
                 In no event shall CarCheck be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or use, arising out of or relating to your use of our service, even if we have been advised of the possibility of such damages. Our total liability shall not exceed the amount paid for the service.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">11. Indemnification</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">12. Indemnification</h2>
               <p className="text-gray-700 leading-relaxed">
                 You agree to indemnify, defend, and hold harmless CarCheck from and against any and all claims, damages, obligations, losses, liabilities, costs, and expenses arising from your use of our service or violation of these terms.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">12. Privacy Policy</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">13. Privacy Policy</h2>
               <p className="text-gray-700 leading-relaxed">
                 Your privacy is important to us. Please review our Privacy Policy, which also governs your use of our service, to understand our practices regarding the collection and use of your information.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">13. Governing Law</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">14. Governing Law</h2>
               <p className="text-gray-700 leading-relaxed">
                 These terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">14. Dispute Resolution</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">15. Dispute Resolution</h2>
               <p className="text-gray-700 leading-relaxed">
                 Any disputes arising from these terms or your use of our service shall be resolved through appropriate channels, except that you may assert claims in small claims court if they qualify.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">15. Modifications to Terms</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">16. Modifications to Terms</h2>
               <p className="text-gray-700 leading-relaxed">
                 We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting to our website. Your continued use of the service after changes constitutes acceptance of the new terms.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">16. Termination</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">17. Termination</h2>
               <p className="text-gray-700 leading-relaxed">
                 We may terminate or suspend your access to our service immediately, without prior notice, for any reason, including but not limited to violation of these terms.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">17. Severability</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">18. Severability</h2>
               <p className="text-gray-700 leading-relaxed">
                 If any provision of these terms is held to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">18. Company Information</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">19. Company Information</h2>
               <div className="bg-blue-50 p-6 rounded-lg mb-6">
                 <div className="text-gray-700">
                   <p className="mb-4"><strong>Service Provider:</strong></p>
@@ -234,7 +251,7 @@ export default function TermsOfService() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">19. Contact Information</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">20. Contact Information</h2>
               <p className="text-gray-700 leading-relaxed">
                 If you have any questions about these Terms of Service, please contact us:
               </p>
