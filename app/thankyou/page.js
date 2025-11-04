@@ -62,7 +62,7 @@ export default function ThankYou() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">Processing Your Request</h3>
-                  <p className="text-gray-600">Our HistorivinStore system is now processing your VIN and gathering data from over 900 trusted sources worldwide.</p>
+                  <p className="text-gray-600">Our HistorivinStore system is now processing your VIN and gathering data from comprehensive databases worldwide.</p>
                 </div>
               </div>
 

@@ -67,7 +67,7 @@ export default function RefundPolicy() {
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. No Refund Policy Overview</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                HistoriVIN operates a strict no-refund policy for all purchases. Once payment is processed and a vehicle history report is generated, <strong>no refunds will be issued under any circumstances</strong>.
+                CarCheck operates a strict no-refund policy for all purchases. Once payment is processed and a vehicle history report is generated, <strong>no refunds will be issued under any circumstances</strong>.
               </p>
               <p className="text-gray-700 leading-relaxed">
                 This policy exists because our service provides immediate digital delivery of comprehensive vehicle history information that cannot be &ldquo;returned&rdquo; once delivered.
@@ -198,7 +198,7 @@ export default function RefundPolicy() {
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Chargeback and Dispute Policy</h2>
               <p className="text-gray-700 leading-relaxed">
-                Initiating a chargeback or payment dispute after receiving a vehicle history report constitutes fraud. We will contest all illegitimate chargebacks and may pursue legal action for fraudulent disputes. The report delivery serves as proof of service completion.
+                Initiating a chargeback or payment dispute after receiving a vehicle history report constitutes fraud. We will contest all illegitimate chargebacks and may pursue action for fraudulent disputes. The report delivery serves as proof of service completion.
               </p>
             </section>
 
@@ -271,7 +271,7 @@ export default function RefundPolicy() {
           </div>
 
           <div className="mt-6 pt-6 border-t border-gray-800 text-center text-gray-400">
-            © 2015 HistoriVIN. All rights reserved.
+            © 2015 CarCheck. All rights reserved.
           </div>
         </div>
       </footer>

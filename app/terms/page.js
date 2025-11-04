@@ -50,7 +50,7 @@ export default function TermsOfService() {
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Acceptance of Terms</h2>
               <p className="text-gray-700 leading-relaxed">
-                By accessing and using HistoriVIN&apos;s website and services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
+                By accessing and using CarCheck&apos;s website and services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
               </p>
             </section>
 
@@ -151,7 +151,7 @@ export default function TermsOfService() {
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Intellectual Property</h2>
               <p className="text-gray-700 leading-relaxed">
-                All content, features, and functionality on our website and in our reports are owned by HistoriVIN and are protected by international copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written permission.
+                All content, features, and functionality on our website and in our reports are owned by CarCheck and are protected by international copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written permission.
               </p>
             </section>
 
@@ -165,14 +165,14 @@ export default function TermsOfService() {
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Limitation of Liability</h2>
               <p className="text-gray-700 leading-relaxed">
-                In no event shall HistoriVIN be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or use, arising out of or relating to your use of our service, even if we have been advised of the possibility of such damages. Our total liability shall not exceed the amount paid for the service.
+                In no event shall CarCheck be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or use, arising out of or relating to your use of our service, even if we have been advised of the possibility of such damages. Our total liability shall not exceed the amount paid for the service.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">11. Indemnification</h2>
               <p className="text-gray-700 leading-relaxed">
-                You agree to indemnify, defend, and hold harmless HistoriVIN from and against any and all claims, damages, obligations, losses, liabilities, costs, and expenses arising from your use of our service or violation of these terms.
+                You agree to indemnify, defend, and hold harmless CarCheck from and against any and all claims, damages, obligations, losses, liabilities, costs, and expenses arising from your use of our service or violation of these terms.
               </p>
             </section>
 
@@ -186,14 +186,14 @@ export default function TermsOfService() {
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">13. Governing Law</h2>
               <p className="text-gray-700 leading-relaxed">
-                These terms shall be governed by and construed in accordance with the laws of the jurisdiction where HistoriVIN operates, without regard to conflict of law principles.
+                These terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">14. Dispute Resolution</h2>
               <p className="text-gray-700 leading-relaxed">
-                Any disputes arising from these terms or your use of our service shall be resolved through binding arbitration rather than in court, except that you may assert claims in small claims court if they qualify.
+                Any disputes arising from these terms or your use of our service shall be resolved through appropriate channels, except that you may assert claims in small claims court if they qualify.
               </p>
             </section>
 
@@ -219,7 +219,22 @@ export default function TermsOfService() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">18. Contact Information</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">18. Company Information</h2>
+              <div className="bg-blue-50 p-6 rounded-lg mb-6">
+                <div className="text-gray-700">
+                  <p className="mb-4"><strong>Service Provider:</strong></p>
+                  <p className="mb-2"><strong>Business Name:</strong> CarCheck</p>
+                  <p className="mb-2"><strong>Website:</strong> <Link href="https://historivin.store" className="text-blue-600 hover:text-blue-700">https://historivin.store</Link></p>
+                  <p className="mb-2"><strong>Email:</strong> support@historivin.store</p>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed">
+                CarCheck is the company operating the HistoriVIN vehicle history report service. All services are provided by CarCheck under these Terms of Service.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">19. Contact Information</h2>
               <p className="text-gray-700 leading-relaxed">
                 If you have any questions about these Terms of Service, please contact us:
               </p>
@@ -257,7 +272,7 @@ export default function TermsOfService() {
           </div>
 
           <div className="mt-6 pt-6 border-t border-gray-800 text-center text-gray-400">
-            © 2015 HistoriVIN. All rights reserved.
+            © 2015 CarCheck. All rights reserved.
           </div>
         </div>
       </footer>

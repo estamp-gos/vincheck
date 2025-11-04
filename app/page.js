@@ -147,8 +147,24 @@ if(formattedDate == "15/11/2025"){
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+              <a href="/pricing" className="text-gray-700 hover:text-blue-600 transition-colors">Pricing</a>
+              <a href="/about" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
+              <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+              <div className="relative group">
+                <button className="text-gray-700 hover:text-blue-600 transition-colors flex items-center">
+                  Legal
+                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="py-1">
+                    <a href="/terms" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Terms & Conditions</a>
+                    <a href="/privacy" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Privacy Policy</a>
+                    <a href="/refund" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Refund Policy</a>
+                  </div>
+                </div>
+              </div>
               <button
                 onClick={scrollToVinInput}
                 className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
@@ -173,8 +189,15 @@ if(formattedDate == "15/11/2025"){
             <div className="md:hidden py-4 border-t">
               <div className="flex flex-col space-y-4">
                 <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Home</a>
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+                <a href="/pricing" className="text-gray-700 hover:text-blue-600 transition-colors">Pricing</a>
+                <a href="/about" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
+                <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
+                <div className="pt-2 border-t border-gray-200">
+                  <div className="text-xs text-gray-500 uppercase tracking-wide mb-2">Legal</div>
+                  <a href="/terms" className="block py-1 text-gray-700 hover:text-blue-600 transition-colors">Terms & Conditions</a>
+                  <a href="/privacy" className="block py-1 text-gray-700 hover:text-blue-600 transition-colors">Privacy Policy</a>
+                  <a href="/refund" className="block py-1 text-gray-700 hover:text-blue-600 transition-colors">Refund Policy</a>
+                </div>
                 <button
                   onClick={scrollToVinInput}
                   className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors w-fit"
@@ -194,12 +217,35 @@ if(formattedDate == "15/11/2025"){
             {/* Left side - Content */}
             <div className="text-center lg:text-left">
               <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                HistoriVIN: Uncover the full story of your<br />
-                <span className="text-blue-600">future or current car</span>
+                HistoriVIN: Comprehensive Vehicle History Reports<br />
+                <span className="text-blue-600">Uncover the complete story of any vehicle</span>
               </h1>
               <p className="text-xl text-gray-600 mb-8 max-w-3xl">
-                Welcome to HistoriVIN - the most trusted source for vehicle history reports. Avoid scams, overpaying, or unsafe vehicles. Get a comprehensive car history report with accident records, mileage verification, title checks, and market analysis in just a few hours.
+                <strong>HistoriVIN is a professional vehicle history report service</strong> that provides comprehensive VIN checks and detailed automotive analysis. Our service delivers complete vehicle histories including accident records, title information, mileage verification, safety recalls, market value analysis, and ownership history. Trusted by car buyers, sellers, and dealers worldwide for making informed vehicle purchasing decisions.
               </p>
+
+              {/* Key Service Highlights */}
+              <div className="bg-white/90 backdrop-blur-sm p-6 rounded-xl shadow-md mb-8 max-w-3xl mx-auto lg:mx-0">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">🚗 Professional Vehicle History Service</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                    <span className="text-gray-700"><strong>Service:</strong> Complete VIN analysis & reporting</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                    <span className="text-gray-700"><strong>Price:</strong> $39.99 per detailed report</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                    <span className="text-gray-700"><strong>Delivery:</strong> Instantly via email</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                    <span className="text-gray-700"><strong>Coverage:</strong> Comprehensive database access</span>
+                  </div>
+                </div>
+              </div>
 
               {/* VIN Input Form */}
               <div id="vin-input-section" className="max-w-2xl mx-auto lg:mx-0 bg-white p-8 rounded-2xl shadow-lg">
@@ -360,6 +406,128 @@ if(formattedDate == "15/11/2025"){
                 <div className="absolute -bottom-4 -left-4 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg">
                   <span className="text-sm font-semibold">$39.99</span>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Key Features & Deliverables Section */}
+      <section className="py-20 bg-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              What You Get with Every HistoriVIN Report
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Our $39.99 vehicle history report includes comprehensive analysis and detailed documentation delivered as a professional PDF report to your email.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Complete Vehicle Analysis Includes:</h3>
+              <div className="space-y-4">
+                {[
+                  {
+                    title: "Comprehensive Vehicle History Report (PDF)",
+                    description: "Professional 15-20 page detailed report delivered via email",
+                    icon: "📄"
+                  },
+                  {
+                    title: "Accident & Damage Documentation",
+                    description: "Complete collision history, damage assessments, and repair records",
+                    icon: "🚗"
+                  },
+                  {
+                    title: "Title & Ownership Verification",
+                    description: "Full ownership chain, liens, and title brand information",
+                    icon: "📋"
+                  },
+                  {
+                    title: "Market Value & Price Analysis",
+                    description: "Current market value, depreciation analysis, and fair price recommendations",
+                    icon: "💰"
+                  },
+                  {
+                    title: "Safety & Recall Information",
+                    description: "Open recalls, safety notices, and manufacturer bulletins",
+                    icon: "🛡️"
+                  },
+                  {
+                    title: "Mileage & Odometer Verification",
+                    description: "Complete mileage history and rollback detection analysis",
+                    icon: "📊"
+                  }
+                ].map((feature, index) => (
+                  <div key={index} className="flex items-start">
+                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                      <span className="text-xl">{feature.icon}</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">{feature.title}</h4>
+                      <p className="text-gray-600 text-sm">{feature.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white p-8 rounded-lg shadow-lg">
+              <div className="text-center mb-6">
+                <div className="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-4xl">📊</span>
+                </div>
+                <h4 className="text-xl font-semibold text-gray-900">Sample Report Summary</h4>
+                <p className="text-sm text-gray-600 mt-2">What your comprehensive report includes</p>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { label: "Vehicle Identification", status: "Complete", color: "green" },
+                  { label: "Accident History Analysis", status: "Detailed", color: "green" },
+                  { label: "Title Information", status: "Verified", color: "green" },
+                  { label: "Market Value Assessment", status: "Current", color: "green" },
+                  { label: "Safety Recall Check", status: "Updated", color: "green" },
+                  { label: "Mileage Verification", status: "Authenticated", color: "green" },
+                  { label: "Ownership History", status: "Complete Chain", color: "blue" },
+                  { label: "Service Records", status: "Available Data", color: "blue" },
+                  { label: "Professional Analysis", status: "Expert Review", color: "green" }
+                ].map((item, index) => (
+                  <div key={index} className="flex justify-between items-center py-2 border-b last:border-b-0">
+                    <span className="text-gray-700 text-sm">{item.label}:</span>
+                    <span className={`text-xs font-semibold px-2 py-1 rounded ${
+                      item.color === 'green' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                    }`}>
+                      {item.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 pt-4 border-t border-gray-200 text-center">
+                <p className="text-sm text-gray-600">Professional PDF report delivered to your email</p>
+                <p className="text-xs text-gray-500 mt-1">Typically 15-20 pages of detailed analysis</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Service Guarantee */}
+          <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-8 text-white text-center">
+            <h3 className="text-2xl font-bold mb-4">HistoriVIN Service Guarantee</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <div className="text-3xl mb-2">⚡</div>
+                <div className="font-semibold">Fast Delivery</div>
+                <div className="text-blue-100 text-sm">6-12 hours maximum (usually 1-2 hours)</div>
+              </div>
+              <div>
+                <div className="text-3xl mb-2">🔒</div>
+                <div className="font-semibold">Secure & Private</div>
+                <div className="text-blue-100 text-sm">SSL encrypted, privacy protected</div>
+              </div>
+              <div>
+                <div className="text-3xl mb-2">📊</div>
+                <div className="font-semibold">Comprehensive Data</div>
+                <div className="text-blue-100 text-sm">Multiple trusted sources worldwide</div>
               </div>
             </div>
           </div>
@@ -592,7 +760,7 @@ if(formattedDate == "15/11/2025"){
                 <div className="font-semibold text-gray-900">Report delivered within 6–12 hours</div>
               </div>
               <div className="text-center">
-                <div className="font-semibold text-gray-900">Verified sources</div>
+                <div className="font-semibold text-gray-900">Comprehensive data</div>
               </div>
             </div>
 
@@ -611,7 +779,7 @@ if(formattedDate == "15/11/2025"){
               HistoriVIN: Leading the way in automotive data
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Since 2020, HistoriVIN has expanded to over 35 international markets. We pull data from 900+ trusted sources, including national vehicle registries, insurance records, law enforcement, and government agencies.
+              Since 2020, HistoriVIN has expanded to over 35 international markets. We pull data from comprehensive databases, including national vehicle registries, insurance records, law enforcement, and government agencies.
             </p>
           </div>
 
@@ -1311,11 +1479,11 @@ if(formattedDate == "15/11/2025"){
       </section>
 
       {/* Support Section */}
-      <section className="py-20">
+      <section id="contact" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Need help?
+              Contact & Support
             </h2>
             <h3 className="text-2xl text-blue-600 mb-4">We are here for you 24/7</h3>
             <p className="text-xl text-gray-600">
@@ -1323,7 +1491,7 @@ if(formattedDate == "15/11/2025"){
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {[
               {
                 number: "97%",
@@ -1351,7 +1519,56 @@ if(formattedDate == "15/11/2025"){
             ))}
           </div>
 
-          <div className="mt-16 bg-blue-50 p-8 rounded-lg">
+          {/* Contact Information */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div className="bg-white p-8 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">Get Support</h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="font-medium text-gray-900">Email Support</div>
+                  <div className="text-blue-600">support@historivin.store</div>
+                  <div className="text-sm text-gray-600 mt-1">Response within 24-48 hours</div>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900">Business Hours</div>
+                  <div className="text-gray-600">24/7 Email Support Available</div>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900">Support Topics</div>
+                  <div className="text-gray-600 text-sm">
+                    • Report delivery issues<br/>
+                    • VIN lookup assistance<br/>
+                    • Technical questions<br/>
+                    • Account support
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-blue-50 p-8 rounded-lg">
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">Company Information</h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="font-medium text-gray-900">Company Name</div>
+                  <div className="text-gray-700">CarCheck</div>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900">Website</div>
+                  <div className="text-blue-600">historivin.store</div>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900">Service</div>
+                  <div className="text-gray-700">Professional Vehicle History Reports</div>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900">Established</div>
+                  <div className="text-gray-700">2015</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 p-8 rounded-lg">
             <p className="text-gray-700 text-center max-w-4xl mx-auto">
               HistoriVIN is a non-refundable digital service. Reports are usually delivered within few minutes via email. However, we mention a 6–12 hour delivery window to account for any rare delays or technical issues. Please ensure your VIN is entered correctly before purchase, as incorrect entries will still result in full report delivery.
             </p>
@@ -1382,7 +1599,7 @@ if(formattedDate == "15/11/2025"){
           </div>
 
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-            © 2015 HistoriVIN. All rights reserved. | Vehicle History Reports & VIN Checks
+            © 2015 CarCheck. All rights reserved. | Vehicle History Reports & VIN Checks
           </div>
         </div>
       </footer>

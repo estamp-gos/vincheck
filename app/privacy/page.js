@@ -50,7 +50,7 @@ export default function PrivacyPolicy() {
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Introduction</h2>
               <p className="text-gray-700 leading-relaxed">
-                HistoriVIN (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our vehicle history report services.
+                CarCheck (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our vehicle history report services.
               </p>
             </section>
 
@@ -219,7 +219,7 @@ export default function PrivacyPolicy() {
           </div>
 
           <div className="mt-6 pt-6 border-t border-gray-800 text-center text-gray-400">
-            © 2015 HistoriVIN. All rights reserved.
+            © 2015 CarCheck. All rights reserved.
           </div>
         </div>
       </footer>

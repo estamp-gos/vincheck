@@ -122,7 +122,7 @@ Please process this request and send the vehicle history report to the customer.
           
           <div style="background-color: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b;">
             <p style="margin: 0; color: #92400e;">
-              <strong>Action Required:</strong> Please process this VIN report request and send the complete vehicle history report to the customer's email address.
+              <strong>Action Required:</strong> Please process this VIN report request and send the complete vehicle history report to the customer email address.
             </p>
           </div>
           
