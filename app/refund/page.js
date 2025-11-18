@@ -187,7 +187,7 @@ export default function RefundPolicy() {
                 To minimize the need for refunds, please ensure you:
               </p>
               <ul className="list-disc pl-6 text-gray-700 space-y-2">
-                <li><strong>Double-check the VIN:</strong> Ensure the 17-character VIN is entered correctly</li>
+                <li><strong>Double-check the VIN:</strong> Ensure the VIN is entered correctly</li>
                 <li><strong>Verify your email:</strong> Make sure your email address is correct for report delivery</li>
                 <li><strong>Understand the service:</strong> We provide historical data available in our databases</li>
                 <li><strong>Check your needs:</strong> Consider if you really need the vehicle history report</li>

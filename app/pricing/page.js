@@ -1,16 +1,212 @@
+'use client'
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export const metadata = {
-  title: "Pricing - HistoriVIN | Vehicle History Reports",
-  description: "Clear pricing for HistoriVIN vehicle history reports. Get comprehensive VIN checks for $39.99 with instant delivery and detailed vehicle analysis.",
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
-
 export default function Pricing() {
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    vin: ''
+  });
+  const [loading, setLoading] = useState(false);
+
+  // Paddle Configuration
+  const CONFIG = {
+    clientToken: "live_57a7704d22d689a024bdfcbfa1c",
+    priceId: "pri_01k34bw78gwcmqk98s3jjda6k4"
+  };
+
+  // Modal styles
+  const modalStyles = {
+    overlay: {
+      display: 'flex',
+      position: 'fixed',
+      zIndex: 1000,
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    modal: {
+      backgroundColor: 'white',
+      width: '90%',
+      maxWidth: '500px',
+      padding: '30px',
+      borderRadius: '10px',
+      boxShadow: '0 5px 30px rgba(0, 0, 0, 0.15)',
+      position: 'relative'
+    },
+    closeButton: {
+      position: 'absolute',
+      right: '20px',
+      top: '15px',
+      fontSize: '24px',
+      cursor: 'pointer'
+    },
+    input: {
+      width: '100%',
+      padding: '12px',
+      border: '1px solid #ddd',
+      borderRadius: '5px',
+      fontSize: '16px'
+    },
+    submitButton: {
+      width: '100%',
+      padding: '15px',
+      background: '#2563eb',
+      color: 'white',
+      border: 'none',
+      borderRadius: '5px',
+      fontSize: '16px',
+      fontWeight: '600',
+      cursor: 'pointer'
+    },
+    loadingSpinner: {
+      border: '4px solid rgba(0, 0, 0, 0.1)',
+      borderRadius: '50%',
+      borderTop: '4px solid #2563eb',
+      width: '30px',
+      height: '30px',
+      animation: 'spin 1s linear infinite',
+      margin: '10px auto'
+    }
+  };
+
+  // Initialize Paddle
+  useEffect(() => {
+    let isMounted = true;
+
+    const initializePaddle = () => {
+      if (window.Paddle && isMounted) {
+        try {
+          window.Paddle.Environment.set("production");
+          window.Paddle.Setup({
+            token: CONFIG.clientToken,
+            eventCallback: function (event) {
+              console.log("Paddle event:", event);
+              if (event.name === "checkout.completed") {
+                setShowModal(false);
+                alert("Payment successful! You will receive your report shortly.");
+              }
+            }
+          });
+          console.log("Paddle initialized successfully");
+        } catch (error) {
+          console.error("Paddle initialization error:", error);
+        }
+      }
+    };
+
+    // Load Paddle script if not already loaded
+    if (!window.Paddle) {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.paddle.com/paddle/v2/paddle.js';
+      script.onload = initializePaddle;
+      script.onerror = () => {
+        console.error("Failed to load Paddle script");
+      };
+      document.head.appendChild(script);
+    } else {
+      initializePaddle();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [CONFIG.clientToken]);
+
+  // Open modal
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  // Close modal
+  const closeModal = () => {
+    setShowModal(false);
+    setFormData({ name: '', email: '', vin: '' });
+    setLoading(false);
+  };
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // Send email notification
+  const sendMail = async (data) => {
+    try {
+      const response = await fetch('https://restless-haze-c6a3.mohamedalzafar.workers.dev/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.text();
+      if (response.ok) {
+        console.log("Submitted successfully!\n" + result);
+      } else {
+        console.log("Error: " + result);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
+  // Open Paddle checkout
+  const openPaddleCheckout = (customerName, customerEmail, customerVin) => {
+    try {
+      console.log(`Opening checkout with price ID: ${CONFIG.priceId}`);
+
+      window.Paddle.Checkout.open({
+        items: [{
+          priceId: CONFIG.priceId,
+          quantity: 1
+        }],
+        settings: {
+          displayMode: "overlay",
+          theme: "light",
+          locale: "en",
+        },
+        customData: {
+          "name": customerName,
+          "email": customerEmail,
+          "vin": customerVin
+        }
+      });
+
+      setLoading(false);
+
+    } catch (error) {
+      console.error("Paddle checkout error:", error.message);
+      alert("There was an error opening the checkout. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const submitData = {
+      name: formData.name,
+      email: formData.email,
+      vin: formData.vin
+    };
+
+    sendMail(submitData);
+    openPaddleCheckout(formData.name, formData.email, formData.vin);
+  };
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -72,12 +268,12 @@ export default function Pricing() {
               </div>
 
               <div className="mb-8">
-                <Link 
-                  href="/"
+                <button 
+                  onClick={openModal}
                   className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg inline-block"
                 >
                   Get Your Report Now
-                </Link>
+                </button>
                 <p className="text-sm text-gray-500 mt-3">Instant delivery • No recurring charges</p>
               </div>
 
@@ -300,12 +496,12 @@ export default function Pricing() {
           </p>
           
           <div className="mb-8">
-            <Link 
-              href="/"
+            <button 
+              onClick={openModal}
               className="bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-gray-100 transition-colors font-semibold text-lg inline-block"
             >
               Get Started for $39.99
-            </Link>
+            </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
@@ -352,6 +548,99 @@ export default function Pricing() {
           </div>
         </div>
       </footer>
+
+      {/* Checkout Modal */}
+      {showModal && (
+        <div 
+          style={modalStyles.overlay}
+          onClick={closeModal}
+        >
+          <div 
+            style={modalStyles.modal}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span 
+              style={modalStyles.closeButton}
+              onClick={closeModal}
+            >
+              &times;
+            </span>
+            
+            <h3 style={{ marginBottom: '20px', color: '#2563eb' }}>
+              Enter Your Details
+            </h3>
+            
+            <form onSubmit={handleSubmit}>
+              <div style={{ marginBottom: '15px' }}>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  style={modalStyles.input}
+                />
+              </div>
+              <div style={{ marginBottom: '15px' }}>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  style={modalStyles.input}
+                />
+              </div>
+
+              <div style={{ marginBottom: '15px' }}>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
+                  Vehicle VIN Number
+                </label>
+                <input
+                  type="text"
+                  name="vin"
+                  value={formData.vin}
+                  onChange={handleInputChange}
+                  required
+                  style={modalStyles.input}
+                  placeholder="Enter VIN number"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                style={{
+                  ...modalStyles.submitButton,
+                  display: loading ? 'none' : 'block'
+                }}
+              >
+                Proceed to Payment
+              </button>
+
+              {loading && (
+                <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                  <div style={modalStyles.loadingSpinner}></div>
+                  <p>Loading...</p>
+                </div>
+              )}
+            </form>
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }

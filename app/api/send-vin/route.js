@@ -17,13 +17,7 @@ export async function POST(request) {
       );
     }
 
-    if (vin.length !== 17) {
-      console.log('❌ Invalid VIN length:', vin.length);
-      return NextResponse.json(
-        { success: false, message: 'VIN must be exactly 17 characters' },
-        { status: 400 }
-      );
-    }
+    // VIN validation removed - accepting any non-empty VIN
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

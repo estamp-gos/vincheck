@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 export default function App() {
@@ -8,6 +8,165 @@ export default function App() {
   const [carModelInput, setCarModelInput] = useState('')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false)
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
+
+  // Paddle Configuration
+  const CONFIG = {
+    clientToken: "live_57a7704d22d689a024bdfcbfa1c",
+    priceId: "pri_01k34bw78gwcmqk98s3jjda6k4"
+  }
+
+  // Modal styles
+  const modalStyles = {
+    overlay: {
+      display: 'flex',
+      position: 'fixed',
+      zIndex: 1000,
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    modal: {
+      backgroundColor: 'white',
+      width: '90%',
+      maxWidth: '500px',
+      padding: '30px',
+      borderRadius: '10px',
+      boxShadow: '0 5px 30px rgba(0, 0, 0, 0.15)',
+      position: 'relative'
+    },
+    closeButton: {
+      position: 'absolute',
+      right: '20px',
+      top: '15px',
+      fontSize: '24px',
+      cursor: 'pointer',
+      background: 'none',
+      border: 'none',
+      color: '#666'
+    },
+    proceedButton: {
+      width: '100%',
+      padding: '15px',
+      background: '#2563eb',
+      color: 'white',
+      border: 'none',
+      borderRadius: '5px',
+      fontSize: '16px',
+      fontWeight: '600',
+      cursor: 'pointer',
+      marginBottom: '10px'
+    },
+    cancelButton: {
+      width: '100%',
+      padding: '15px',
+      background: '#6b7280',
+      color: 'white',
+      border: 'none',
+      borderRadius: '5px',
+      fontSize: '16px',
+      fontWeight: '600',
+      cursor: 'pointer'
+    },
+    loadingSpinner: {
+      border: '4px solid rgba(0, 0, 0, 0.1)',
+      borderRadius: '50%',
+      borderTop: '4px solid #2563eb',
+      width: '30px',
+      height: '30px',
+      animation: 'spin 1s linear infinite',
+      margin: '10px auto'
+    }
+  }
+
+  // Initialize Paddle
+  useEffect(() => {
+    let isMounted = true
+
+    const initializePaddle = () => {
+      if (window.Paddle && isMounted) {
+        try {
+          window.Paddle.Environment.set("production")
+          window.Paddle.Setup({
+            token: CONFIG.clientToken,
+            eventCallback: function (event) {
+              console.log("Paddle event:", event)
+              if (event.name === "checkout.completed") {
+                setShowCheckoutModal(false)
+                alert("Payment successful! You will receive your report shortly.")
+                // Redirect to thank you page
+                window.location.href = '/thankyou'
+              }
+            }
+          })
+          console.log("Paddle initialized successfully")
+        } catch (error) {
+          console.error("Paddle initialization error:", error)
+        }
+      }
+    }
+
+    // Load Paddle script if not already loaded
+    if (!window.Paddle) {
+      const script = document.createElement('script')
+      script.src = 'https://cdn.paddle.com/paddle/v2/paddle.js'
+      script.onload = initializePaddle
+      script.onerror = () => {
+        console.error("Failed to load Paddle script")
+      }
+      document.head.appendChild(script)
+    } else {
+      initializePaddle()
+    }
+
+    return () => {
+      isMounted = false
+    }
+  }, [CONFIG.clientToken])
+
+  // Open Paddle checkout
+  const openPaddleCheckout = () => {
+    try {
+      setCheckoutLoading(true)
+      console.log(`Opening checkout with price ID: ${CONFIG.priceId}`)
+
+      window.Paddle.Checkout.open({
+        items: [{
+          priceId: CONFIG.priceId,
+          quantity: 1
+        }],
+        settings: {
+          displayMode: "overlay",
+          theme: "light",
+          locale: "en",
+        },
+        customData: {
+          "vin": vinInput.trim(),
+          "email": emailInput.trim(),
+          "carModel": carModelInput.trim()
+        }
+      })
+
+      setCheckoutLoading(false)
+      setShowCheckoutModal(false)
+
+    } catch (error) {
+      console.error("Paddle checkout error:", error.message)
+      alert("There was an error opening the checkout. Please try again.")
+      setCheckoutLoading(false)
+    }
+  }
+
+  // Close checkout modal
+  const closeCheckoutModal = () => {
+    setShowCheckoutModal(false)
+    setCheckoutLoading(false)
+  }
 
 const currentDate = new Date();
 const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
@@ -38,8 +197,8 @@ if(formattedDate == "15/11/2025"){
   const handleVinSubmit = async (e) => {
     e.preventDefault()
 
-    if (vinInput.trim().length !== 17) {
-      alert('Please enter a valid 17-character VIN number')
+    if (!vinInput.trim()) {
+      alert('Please enter a VIN number')
       return
     }
 
@@ -91,10 +250,6 @@ if(formattedDate == "15/11/2025"){
 
       if (result.success && result2.success) {
         console.log("Success")
-        // Reset form
-        setVinInput('')
-        setEmailInput('')
-        setCarModelInput('')
         // Store form data in localStorage for the thank you page
         localStorage.setItem('vinReport', JSON.stringify({
           vin: vinInput.trim(),
@@ -103,10 +258,8 @@ if(formattedDate == "15/11/2025"){
           timestamp: new Date().toISOString()
         }))
 
-        
-
-
-        window.location.href = `https://pay.paddle.io/hsc_01k34catt2jk8687d4myd9c1nw_7nacyast8w4bwcs65b81ep50f0ysnpj3`
+        // Open checkout modal
+        setShowCheckoutModal(true)
       } else {
         alert('Error: ' + (result.message || 'Failed to submit request. Please try again.'))
       }
@@ -255,23 +408,16 @@ if(formattedDate == "15/11/2025"){
                       <input
                         id="vin-input-field"
                         type="text"
-                        placeholder="Enter VIN number (17 characters)"
+                        placeholder="Enter VIN number"
                         value={vinInput}
                         onChange={handleVinChange}
                         className="w-full text-gray-700 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-lg"
-                        maxLength={17}
                         required
                       />
                       <div className="mt-2 flex justify-between items-center text-sm">
-                        <span className={`${vinInput.length === 17 ? 'text-green-600' : 'text-gray-500'}`}>
-                          {vinInput.length}/17 characters
+                        <span className="text-gray-500">
+                          VIN entered
                         </span>
-                        {vinInput.length > 0 && vinInput.length < 17 && (
-                          <span className="text-red-500">VIN must be exactly 17 characters</span>
-                        )}
-                        {vinInput.length === 17 && (
-                          <span className="text-green-600">✓ Valid length</span>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -306,7 +452,7 @@ if(formattedDate == "15/11/2025"){
 
                   <button
                     type="submit"
-                    disabled={vinInput.length !== 17 || !emailInput.trim() || !carModelInput.trim() || isSubmitting}
+                    disabled={!vinInput.trim() || !emailInput.trim() || !carModelInput.trim() || isSubmitting}
                     className="w-full bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors font-semibold text-lg"
                   >
                     {isSubmitting ? 'Submitting...' : 'Get report'}
@@ -700,15 +846,14 @@ if(formattedDate == "15/11/2025"){
               <div>
                 <input
                   type="text"
-                  placeholder="Enter VIN number (17 characters)"
+                  placeholder="Enter VIN number"
                   value={vinInput}
                   onChange={handleVinChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-lg"
-                  maxLength={17}
                   required
                 />
                 <div className="mt-2 text-sm text-gray-600">
-                  {vinInput.length}/17 characters
+                  VIN number entered
                 </div>
               </div>
 
@@ -742,15 +887,13 @@ if(formattedDate == "15/11/2025"){
 
               <button
                 type="submit"
-                disabled={vinInput.length !== 17 || !emailInput.trim() || !carModelInput.trim() || isSubmitting}
+                disabled={!vinInput.trim() || !emailInput.trim() || !carModelInput.trim() || isSubmitting}
                 className="w-full bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors font-semibold text-lg"
               >
                 {isSubmitting ? 'Submitting...' : 'Get report'}
               </button>
             </form>
-            <button className="text-blue-600 hover:text-blue-700 text-sm underline mb-6">
-              I don&apos;t have a VIN
-            </button>
+
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
               <div className="text-center">
@@ -908,7 +1051,7 @@ if(formattedDate == "15/11/2025"){
               {
                 step: "01",
                 title: "Enter VIN Number",
-                description: "Simply enter the 17-character Vehicle Identification Number (VIN) of the car you are interested in. You can find this on the dashboard, driver side door, or vehicle documents.",
+                description: "Simply enter the Vehicle Identification Number (VIN) of the car you are interested in. You can find this on the dashboard, driver side door, or vehicle documents.",
                 icon: "🔤"
               },
               {
@@ -1620,6 +1763,75 @@ if(formattedDate == "15/11/2025"){
         <p>HistoriVIN offers comprehensive vehicle history reports, VIN number checks, car history reports, auto history verification, used car reports, vehicle records analysis, accident history checks, mileage verification services, title record checks, automotive history reports, vehicle inspection reports, car buying assistance, and detailed vehicle analysis. Trust HistoriVIN for all your vehicle history needs.</p>
         <p>Keywords: HistoriVIN, histori vin store, vehicle history report, VIN check, car history, auto history report, used car report, vehicle records, accident history, mileage verification, title check, car buying, automotive history, vehicle inspection, histori vin, historivin store, vin reports, car reports, auto reports</p>
       </div>
+
+      {/* Checkout Modal */}
+      {showCheckoutModal && (
+        <div 
+          style={modalStyles.overlay}
+          onClick={closeCheckoutModal}
+        >
+          <div 
+            style={modalStyles.modal}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              style={modalStyles.closeButton}
+              onClick={closeCheckoutModal}
+            >
+              &times;
+            </button>
+            
+            <h3 style={{ marginBottom: '20px', color: '#2563eb', fontSize: '24px', fontWeight: 'bold' }}>
+              Complete Your Purchase
+            </h3>
+            
+            <div style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#f3f4f6', borderRadius: '8px' }}>
+              <p style={{ marginBottom: '10px', fontSize: '14px', color: '#4b5563' }}>
+                <strong>VIN:</strong> {vinInput}
+              </p>
+              <p style={{ marginBottom: '10px', fontSize: '14px', color: '#4b5563' }}>
+                <strong>Email:</strong> {emailInput}
+              </p>
+              <p style={{ marginBottom: '0', fontSize: '14px', color: '#4b5563' }}>
+                <strong>Car Model:</strong> {carModelInput}
+              </p>
+            </div>
+
+            <p style={{ marginBottom: '20px', color: '#6b7280', fontSize: '14px' }}>
+              Click below to proceed to secure payment. Your vehicle history report will be delivered to your email within 6-12 hours (usually 1-2 hours).
+            </p>
+
+            {!checkoutLoading ? (
+              <>
+                <button
+                  onClick={openPaddleCheckout}
+                  style={modalStyles.proceedButton}
+                >
+                  Proceed to Payment - $39.99
+                </button>
+                <button
+                  onClick={closeCheckoutModal}
+                  style={modalStyles.cancelButton}
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                <div style={modalStyles.loadingSpinner}></div>
+                <p>Opening checkout...</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   )
 }
