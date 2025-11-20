@@ -233,22 +233,9 @@ if(formattedDate == "15/11/2025"){
       })
       
 
-        const response2 = await fetch('/api/reminder', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          vin: vinInput.trim(),
-          email: emailInput.trim(),
-          carModel: carModelInput.trim()
-        })
-      })
-
       const result = await response.json()
-      const result2 = await response2.json()
 
-      if (result.success && result2.success) {
+      if (result.success) {
         console.log("Success")
         // Store form data in localStorage for the thank you page
         localStorage.setItem('vinReport', JSON.stringify({
