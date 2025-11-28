@@ -127,8 +127,12 @@ export async function POST(request) {
 
     // Send payment success email to customer for specific events
     console.log('Checking event type for email:', eventData.event_type || eventData.eventType);
+    console.log('Full event data:', JSON.stringify(eventData, null, 2));
     
-    if (eventData.event_type === 'transaction.completed' || eventData.event_type === 'transaction.paid') {
+    // Force sending email for testing - remove after verification
+    console.log('TESTING: Attempting to send email for any transaction event');
+    
+    if (eventData.event_type === 'transaction.completed' || eventData.event_type === 'transaction.paid' || eventData.data?.id) {
       const customerId = eventData.data.customer_id;
       const transactionId = eventData.data.id;
       const productName = eventData.data.items?.[0]?.price?.name || "Vehicle History Report";
@@ -137,9 +141,11 @@ export async function POST(request) {
       const name = eventData.data.payments?.[0]?.method_details?.card?.cardholder_name || 'Valued Customer';
 
       console.log('Processing payment success email for customer:', customerId);
+      console.log('Transaction details:', { transactionId, productName, amount, currency, name });
 
       if (customerId) {
         try {
+          console.log('Attempting to fetch customer details from Paddle API...');
           // Fetch customer details using Paddle API
           const customer = await paddle.customers.get(customerId);
           const customerEmail = customer.email;
@@ -150,7 +156,7 @@ export async function POST(request) {
           if (customerEmail) {
             console.log('Sending payment success email to:', customerEmail);
             
-            const { data, error } = await resend.emails.send({
+            const emailResult = await resend.emails.send({
               from: 'support@historivin.store',
               to: [customerEmail, "mohamedalzafar@gmail.com"],
               subject: 'Payment Successful - Your Vehicle Report is Being Prepared',
@@ -165,9 +171,11 @@ export async function POST(request) {
               }),
             });
 
-            if (error) {
-              console.error('Resend email error:', error);
+            if (emailResult.error) {
+              console.error('Resend email error:', emailResult.error);
             } else {
+              console.log('Payment success email sent successfully:', emailResult.data);
+            }
               console.log('Payment success email sent successfully:', data);
             }
           } else {
@@ -175,10 +183,60 @@ export async function POST(request) {
           }
         } catch (customerFetchError) {
           console.error('Failed to fetch customer details:', customerFetchError);
-          // Don't fail the webhook if customer fetch fails
+          
+          // Try sending a basic notification email even if customer fetch fails
+          console.log('Sending basic payment notification email...');
+          try {
+            const basicEmailResult = await resend.emails.send({
+              from: 'support@historivin.store',
+              to: "mohamedalzafar@gmail.com",
+              subject: `Payment Received - Transaction ${transactionId}`,
+              html: `
+                <h3>Payment Notification</h3>
+                <p>A payment was completed but customer details could not be fetched.</p>
+                <p><b>Transaction ID:</b> ${transactionId}</p>
+                <p><b>Customer ID:</b> ${customerId}</p>
+                <p><b>Amount:</b> $${(amount / 100).toFixed(2)} ${currency}</p>
+                <p><b>Product:</b> ${productName}</p>
+                <p><b>Error:</b> ${customerFetchError.message}</p>
+              `,
+            });
+            
+            if (basicEmailResult.error) {
+              console.error('Basic email also failed:', basicEmailResult.error);
+            } else {
+              console.log('Basic email sent successfully:', basicEmailResult.data);
+            }
+          } catch (basicEmailError) {
+            console.error('Failed to send basic email:', basicEmailError);
+          }
         }
       } else {
         console.error('No customer ID found in webhook data');
+        
+        // Send notification about missing customer ID
+        try {
+          const noCustomerEmailResult = await resend.emails.send({
+            from: 'support@historivin.store',
+            to: "mohamedalzafar@gmail.com",
+            subject: `Webhook Alert - No Customer ID`,
+            html: `
+              <h3>Webhook Alert</h3>
+              <p>Received webhook but no customer ID found.</p>
+              <p><b>Event Type:</b> ${eventData.event_type}</p>
+              <p><b>Transaction ID:</b> ${transactionId}</p>
+              <p><b>Data:</b> <pre>${JSON.stringify(eventData.data, null, 2)}</pre></p>
+            `,
+          });
+          
+          if (noCustomerEmailResult.error) {
+            console.error('No customer ID alert email failed:', noCustomerEmailResult.error);
+          } else {
+            console.log('No customer ID alert email sent:', noCustomerEmailResult.data);
+          }
+        } catch (alertEmailError) {
+          console.error('Failed to send alert email:', alertEmailError);
+        }
       }
     } else {
       console.log('Event type does not match payment completion:', eventData.event_type);
