@@ -9,6 +9,8 @@ const paddle = new Paddle(process.env.PADDLE_API_KEY, {
 });
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+//bhfgvadskfds
+
 
 // Manual signature verification function as fallback
 function verifyPaddleSignature(body, signature, secret) {
@@ -247,16 +249,13 @@ export async function POST(request) {
 
     return new Response(JSON.stringify({ 
       ok: true, 
-      event: eventData.event_type || eventData.eventType,
-      id: eventData.event_id || eventData.eventId 
+      event: eventData.eventType,
+      id: eventData.eventId 
     }), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
       },
-    });
-        'Content-Type': 'application/json',
-      }
     });
 
   } catch (error) {
@@ -268,7 +267,7 @@ export async function POST(request) {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     });
   }
 }
