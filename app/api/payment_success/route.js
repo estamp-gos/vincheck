@@ -127,10 +127,6 @@ export async function POST(request) {
 
     // Send payment success email to customer for specific events
     console.log('Checking event type for email:', eventData.event_type || eventData.eventType);
-    console.log('Full event data:', JSON.stringify(eventData, null, 2));
-    
-    // Force sending email for testing - remove after verification
-    console.log('TESTING: Attempting to send email for any transaction event');
     
     if (eventData.event_type === 'transaction.completed' || eventData.event_type === 'transaction.paid' || eventData.data?.id) {
       const customerId = eventData.data.customer_id;
@@ -138,102 +134,80 @@ export async function POST(request) {
       const productName = eventData.data.items?.[0]?.price?.name || "Vehicle History Report";
       const amount = eventData.data.items?.[0]?.price?.unit_price?.amount || 0;
       const currency = eventData.data.items?.[0]?.price?.unit_price?.currency_code || 'USD';
-      const name = eventData.data.payments?.[0]?.method_details?.card?.cardholder_name || 'Valued Customer';
+      
+      // Get customer details from custom_data first (more reliable)
+      const customData = eventData.data.custom_data || {};
+      let customerEmail = customData.email;
+      let customerName = customData.name || 'Valued Customer';
+      const vin = customData.vin || 'N/A';
+      const plan = customData.plan || 'standard';
 
-      console.log('Processing payment success email for customer:', customerId);
-      console.log('Transaction details:', { transactionId, productName, amount, currency, name });
+      console.log('Custom data from webhook:', { customerEmail, customerName, vin, plan });
+      console.log('Transaction details:', { transactionId, productName, amount, currency });
 
-      if (customerId) {
+      // If no email in custom_data, try to fetch from Paddle API
+      if (!customerEmail && customerId) {
         try {
-          console.log('Attempting to fetch customer details from Paddle API...');
-          // Fetch customer details using Paddle API
+          console.log('No email in custom_data, fetching from Paddle API...');
           const customer = await paddle.customers.get(customerId);
-          const customerEmail = customer.email;
-          const customerName = customer.name || 'Valued Customer';
-
-          console.log('Customer details fetched:', { customerEmail, customerName });
-
-          if (customerEmail) {
-            console.log('Sending payment success email to:', customerEmail);
-            
-            const emailResult = await resend.emails.send({
-              from: 'support@historivin.store',
-              to: [customerEmail, "mohamedalzafar@gmail.com"],
-              subject: 'Payment Successful - Your Vehicle Report is Being Prepared',
-              react: PaymentSuccessEmailTemplate({
-                customerEmail,
-                customerName,
-                transactionId,
-                productName,
-                amount: (amount / 100).toFixed(2),
-                currency,
-                name
-              }),
-            });
-
-            if (emailResult.error) {
-              console.error('Resend email error:', emailResult.error);
-            } else {
-              console.log('Payment success email sent successfully:', emailResult.data);
-            }
-          } else {
-            console.error('No customer email found');
-          }
+          customerEmail = customer.email;
+          customerName = customer.name || customerName;
+          console.log('Customer details from Paddle:', { customerEmail, customerName });
         } catch (customerFetchError) {
-          console.error('Failed to fetch customer details:', customerFetchError);
+          console.error('Failed to fetch customer from Paddle:', customerFetchError.message);
+        }
+      }
+
+      // Send payment success email
+      if (customerEmail) {
+        try {
+          console.log('Sending payment success email to:', customerEmail);
           
-          // Try sending a basic notification email even if customer fetch fails
-          console.log('Sending basic payment notification email...');
-          try {
-            const basicEmailResult = await resend.emails.send({
-              from: 'support@historivin.store',
-              to: "mohamedalzafar@gmail.com",
-              subject: `Payment Received - Transaction ${transactionId}`,
-              html: `
-                <h3>Payment Notification</h3>
-                <p>A payment was completed but customer details could not be fetched.</p>
-                <p><b>Transaction ID:</b> ${transactionId}</p>
-                <p><b>Customer ID:</b> ${customerId}</p>
-                <p><b>Amount:</b> $${(amount / 100).toFixed(2)} ${currency}</p>
-                <p><b>Product:</b> ${productName}</p>
-                <p><b>Error:</b> ${customerFetchError.message}</p>
-              `,
-            });
-            
-            if (basicEmailResult.error) {
-              console.error('Basic email also failed:', basicEmailResult.error);
-            } else {
-              console.log('Basic email sent successfully:', basicEmailResult.data);
-            }
-          } catch (basicEmailError) {
-            console.error('Failed to send basic email:', basicEmailError);
+          const emailResult = await resend.emails.send({
+            from: 'support@historivin.store',
+            to: [customerEmail, "mohamedalzafar@gmail.com"],
+            subject: 'Payment Successful - Your Vehicle Report is Being Prepared',
+            react: PaymentSuccessEmailTemplate({
+              customerEmail,
+              customerName,
+              transactionId,
+              productName,
+              amount: (amount / 100).toFixed(2),
+              currency,
+              name: customerName,
+              vin,
+              plan
+            }),
+          });
+
+          if (emailResult.error) {
+            console.error('Resend email error:', emailResult.error);
+          } else {
+            console.log('Payment success email sent successfully:', emailResult.data);
           }
+        } catch (emailError) {
+          console.error('Failed to send payment success email:', emailError);
         }
       } else {
-        console.error('No customer ID found in webhook data');
+        console.error('No customer email available from custom_data or Paddle API');
         
-        // Send notification about missing customer ID
+        // Send admin alert about missing email
         try {
-          const noCustomerEmailResult = await resend.emails.send({
+          await resend.emails.send({
             from: 'support@historivin.store',
             to: "mohamedalzafar@gmail.com",
-            subject: `Webhook Alert - No Customer ID`,
+            subject: `Alert: Payment without customer email - ${transactionId}`,
             html: `
-              <h3>Webhook Alert</h3>
-              <p>Received webhook but no customer ID found.</p>
-              <p><b>Event Type:</b> ${eventData.event_type}</p>
+              <h3>Payment Alert</h3>
+              <p>A payment was received but no customer email was found.</p>
               <p><b>Transaction ID:</b> ${transactionId}</p>
-              <p><b>Data:</b> <pre>${JSON.stringify(eventData.data, null, 2)}</pre></p>
+              <p><b>Customer ID:</b> ${customerId}</p>
+              <p><b>Amount:</b> $${(amount / 100).toFixed(2)} ${currency}</p>
+              <p><b>Custom Data:</b> <pre>${JSON.stringify(customData, null, 2)}</pre></p>
             `,
           });
-          
-          if (noCustomerEmailResult.error) {
-            console.error('No customer ID alert email failed:', noCustomerEmailResult.error);
-          } else {
-            console.log('No customer ID alert email sent:', noCustomerEmailResult.data);
-          }
-        } catch (alertEmailError) {
-          console.error('Failed to send alert email:', alertEmailError);
+        } catch (alertError) {
+          console.error('Failed to send alert email:', alertError);
         }
       }
     } else {
