@@ -13,40 +13,27 @@ export async function POST(request) {
   try {
     // Get raw body and signature
     const body = await request.text();
-    const signature = request.headers.get('paddle-signature') || '';
-    const secretKey = process.env.PADDLE_SECRET_KEY || '';
+    const signature = request.headers.get("paddle-signature") || "";
+    const publicKey = process.env.PADDLE_PUBLIC_KEY;
 
     if (!signature || !body) {
-      console.error('Missing signature or body:', { signature: !!signature, body: !!body });
-      return new Response(JSON.stringify({ message: 'Signature or body missing' }), { 
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return new Response(JSON.stringify({ message: "Signature or body missing" }), { status: 400 });
     }
 
-    if (!secretKey) {
-      console.error('Missing PADDLE_SECRET_KEY environment variable');
-      return new Response(JSON.stringify({ message: 'Server configuration error' }), { 
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      });
+    if (!publicKey) {
+      console.error("Missing PADDLE_PUBLIC_KEY");
+      return new Response(JSON.stringify({ message: "Server configuration error" }), { status: 500 });
     }
 
-    // Verify webhook signature
+    // Verify Webhook (CORRECT WAY)
     let eventData;
     try {
-      eventData = await paddle.webhooks.unmarshal(
-        body,
-        secretKey,
-        signature
-      );
-    } catch (verificationError) {
-      console.error('Webhook verification failed:', verificationError);
-      return new Response(JSON.stringify({ message: 'Invalid webhook signature' }), { 
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      eventData = await paddle.webhooks.unmarshal(body, publicKey, signature);
+    } catch (error) {
+      console.error("Webhook signature failed:", error);
+      return new Response(JSON.stringify({ message: "Invalid webhook signature" }), { status: 400 });
     }
+
 
     // Send payment success email to customer for specific events
     if ([EventName.TransactionPaid, EventName.TransactionCompleted].includes(eventData.eventType)) {
@@ -135,11 +122,11 @@ export async function POST(request) {
 
     // Send Email
     try {
-      const transporter = nodemailer.createTransporter({
+      const transporter = nodemailer.createTransport({
         service: 'gmail',
-        auth: { 
-          user: process.env.EMAIL_USER, 
-          pass: process.env.EMAIL_PASS 
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
         },
       });
 
@@ -156,10 +143,10 @@ export async function POST(request) {
       // Don't fail the webhook if email fails
     }
 
-    return new Response(JSON.stringify({ 
-      ok: true, 
+    return new Response(JSON.stringify({
+      ok: true,
       event: eventData.eventType,
-      id: eventData.eventId 
+      id: eventData.eventId
     }), {
       status: 200,
       headers: {
@@ -169,10 +156,10 @@ export async function POST(request) {
 
   } catch (error) {
     console.error('Webhook processing error:', error);
-    return new Response(JSON.stringify({ 
-      message: 'Webhook processing failed', 
-      error: error.message 
-    }), { 
+    return new Response(JSON.stringify({
+      message: 'Webhook processing failed',
+      error: error.message
+    }), {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
@@ -191,3 +178,10 @@ export async function OPTIONS(request) {
     },
   });
 }
+
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
