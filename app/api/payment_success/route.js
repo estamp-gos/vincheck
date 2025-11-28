@@ -124,13 +124,17 @@ export async function POST(request) {
     }
 
     // Send payment success email to customer for specific events
-    if ([EventName.TransactionPaid, EventName.TransactionCompleted].includes(eventData.eventType)) {
+    console.log('Checking event type for email:', eventData.event_type || eventData.eventType);
+    
+    if (eventData.event_type === 'transaction.completed' || eventData.event_type === 'transaction.paid') {
       const customerId = eventData.data.customer_id;
       const transactionId = eventData.data.id;
       const productName = eventData.data.items?.[0]?.price?.name || "Vehicle History Report";
       const amount = eventData.data.items?.[0]?.price?.unit_price?.amount || 0;
       const currency = eventData.data.items?.[0]?.price?.unit_price?.currency_code || 'USD';
       const name = eventData.data.payments?.[0]?.method_details?.card?.cardholder_name || 'Valued Customer';
+
+      console.log('Processing payment success email for customer:', customerId);
 
       if (customerId) {
         try {
@@ -139,7 +143,11 @@ export async function POST(request) {
           const customerEmail = customer.email;
           const customerName = customer.name || 'Valued Customer';
 
+          console.log('Customer details fetched:', { customerEmail, customerName });
+
           if (customerEmail) {
+            console.log('Sending payment success email to:', customerEmail);
+            
             const { data, error } = await resend.emails.send({
               from: 'support@historivin.store',
               to: [customerEmail, "mohamedalzafar@gmail.com"],
@@ -157,51 +165,57 @@ export async function POST(request) {
 
             if (error) {
               console.error('Resend email error:', error);
+            } else {
+              console.log('Payment success email sent successfully:', data);
             }
+          } else {
+            console.error('No customer email found');
           }
         } catch (customerFetchError) {
           console.error('Failed to fetch customer details:', customerFetchError);
           // Don't fail the webhook if customer fetch fails
         }
+      } else {
+        console.error('No customer ID found in webhook data');
       }
+    } else {
+      console.log('Event type does not match payment completion:', eventData.event_type);
     }
 
-    // Prepare email content
-    let subject = `Paddle Event: ${eventData.eventType}`;
-    let plain = `Event: ${eventData.eventType}\nData: ${JSON.stringify(eventData.data, null, 2)}`;
+    // Prepare email content for admin notification
+    let subject = `Paddle Event: ${eventData.event_type || eventData.eventType}`;
+    let plain = `Event: ${eventData.event_type || eventData.eventType}\nData: ${JSON.stringify(eventData.data, null, 2)}`;
     let html = `
       <h3>Transaction Event</h3>
-      <p><b>Event Type:</b> ${eventData.eventType}</p>
-      <p><b>Event ID:</b> ${eventData.eventId || 'N/A'}</p>
-      <p><b>Occurred At:</b> ${eventData.occurredAt || 'N/A'}</p>
+      <p><b>Event Type:</b> ${eventData.event_type || eventData.eventType}</p>
+      <p><b>Event ID:</b> ${eventData.event_id || 'N/A'}</p>
+      <p><b>Occurred At:</b> ${eventData.occurred_at || 'N/A'}</p>
       ${eventData.data.items && eventData.data.items.length > 0 ? `
       <p><b>Product:</b> ${eventData.data.items[0].price.name || "Unknown Product"}</p>
       <p><b>Amount:</b> $${((eventData.data.items[0].price.unit_price?.amount || 0) / 100).toFixed(2)} ${eventData.data.items[0].price.unit_price?.currency_code || 'USD'}</p>
       <p><b>Customer ID:</b> ${eventData.data.customer_id || 'N/A'}</p>
       <p><b>Transaction ID:</b> ${eventData.data.id || 'N/A'}</p>
       <p><b>Status:</b> ${eventData.data.status || 'N/A'}</p>
-      <p><b>Status:</b> historivin Testing purposes </p>
       <p><b>Name:</b> ${eventData.data.payments?.[0]?.method_details?.card?.cardholder_name || 'N/A'}</p>
       ` : '<p><b>No items found in transaction</b></p>'}
-      
     `;
-    // <pre>${JSON.stringify(eventData.data, null, 2)}</pre>
 
     // Customize email based on event type
-    switch (eventData.eventType) {
-      case EventName.TransactionCreated:
+    const eventType = eventData.event_type || eventData.eventType;
+    switch (eventType) {
+      case 'transaction.created':
         subject = `New Transaction Created: ${eventData.data.id}`;
         break;
-      case EventName.TransactionPaid:
+      case 'transaction.paid':
         subject = `Transaction Paid: ${eventData.data.id}`;
         break;
-      case EventName.TransactionCompleted:
-        subject = `Completed ---- ${eventData.data.id}`;
+      case 'transaction.completed':
+        subject = `Transaction Completed: ${eventData.data.id}`;
         break;
-      case EventName.SubscriptionActivated:
+      case 'subscription.activated':
         subject = `Subscription Activated: ${eventData.data.id}`;
         break;
-      case EventName.SubscriptionCanceled:
+      case 'subscription.canceled':
         subject = `Subscription Canceled: ${eventData.data.id}`;
         break;
       default:
@@ -233,11 +247,14 @@ export async function POST(request) {
 
     return new Response(JSON.stringify({ 
       ok: true, 
-      event: eventData.eventType,
-      id: eventData.eventId 
+      event: eventData.event_type || eventData.eventType,
+      id: eventData.event_id || eventData.eventId 
     }), {
       status: 200,
       headers: {
+        'Content-Type': 'application/json',
+      },
+    });
         'Content-Type': 'application/json',
       }
     });
