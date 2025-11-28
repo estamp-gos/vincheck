@@ -176,8 +176,6 @@ export async function POST(request) {
             } else {
               console.log('Payment success email sent successfully:', emailResult.data);
             }
-              console.log('Payment success email sent successfully:', data);
-            }
           } else {
             console.error('No customer email found');
           }
